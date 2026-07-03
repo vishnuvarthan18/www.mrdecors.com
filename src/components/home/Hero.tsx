@@ -9,19 +9,22 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden pt-32 pb-16 noise-bg">
+    <section className="relative min-h-screen overflow-hidden pt-28 pb-16 glow-light">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-bg-elev px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-muted"
+          className="flex items-center justify-between border-b border-border pb-5 text-[11px] sm:text-xs font-medium uppercase tracking-[0.22em] text-muted"
         >
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          Custom Decor Manufacturer · Erode · Since 2000
-        </motion.p>
+          <span className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            Custom Decor Manufacturer
+          </span>
+          <span className="hidden sm:inline">Erode · Since 2000</span>
+        </motion.div>
 
-        <h1 className="font-display font-semibold text-white text-[13vw] leading-[0.9] sm:text-[10vw] lg:text-[8.5rem]">
+        <h1 className="mt-10 font-display font-semibold text-text text-[13vw] leading-[0.9] sm:text-[10vw] lg:text-[8.5rem]">
           <span className="block overflow-hidden">
             <motion.span
               className="block"
@@ -62,7 +65,7 @@ export default function Hero() {
           >
             <p className="max-w-md text-lg text-muted leading-relaxed">
               We design and fabricate one-of-a-kind stage backdrops and event
-              decor — every piece cut, shaped, and built in-house. Never off a
+              decor. Every piece is cut, shaped, and built in house, never off a
               shelf.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -77,10 +80,19 @@ export default function Hero() {
               </a>
               <Link
                 href="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-7 py-4 text-sm font-semibold text-white transition-colors hover:border-white"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-7 py-4 text-sm font-semibold text-text transition-colors hover:border-text"
               >
                 View Our Work
               </Link>
+            </div>
+            <div className="mt-8 flex items-center gap-5 text-sm text-muted">
+              <span className="flex items-center gap-1.5">
+                <span className="text-primary">★</span> 4.5 / 5
+              </span>
+              <span className="h-4 w-px bg-border" />
+              <span>500+ events</span>
+              <span className="h-4 w-px bg-border" />
+              <span>25 years</span>
             </div>
           </motion.div>
 
@@ -91,6 +103,7 @@ export default function Hero() {
           >
             <PlaceholderImage
               label="Signature Wedding Stage Backdrop"
+              src="/images/hero-stage.jpg"
               aspect="aspect-[16/10]"
             />
           </motion.div>

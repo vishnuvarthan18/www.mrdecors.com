@@ -17,7 +17,7 @@ export default function ContactPage() {
       <PageHeader
         eyebrow="Contact"
         title="Let's talk about your event"
-        description="Reach out by phone, WhatsApp, or the form below — we typically respond the same day."
+        description="Reach out by phone, WhatsApp, or the form below. We typically respond the same day."
       />
 
       <section className="pb-28">
@@ -29,7 +29,7 @@ export default function ContactPage() {
                   <iframe
                     title="MR Decors location"
                     src={business.mapsEmbedSrc}
-                    className="w-full aspect-[4/3] grayscale invert-[0.92] contrast-[0.9]"
+                    className="w-full aspect-[4/3]"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                   />
@@ -38,7 +38,7 @@ export default function ContactPage() {
                 <dl className="mt-8 space-y-5">
                   <div>
                     <dt className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Address</dt>
-                    <dd className="mt-1.5 text-white">
+                    <dd className="mt-1.5 text-text">
                       <a href={business.mapsLink} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                         {business.address}
                       </a>
@@ -46,7 +46,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <dt className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Phone</dt>
-                    <dd className="mt-1.5 text-white">
+                    <dd className="mt-1.5 text-text">
                       <a href={business.phoneLink} className="hover:text-primary transition-colors">
                         {business.phoneDisplay}
                       </a>
@@ -54,7 +54,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <dt className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Hours</dt>
-                    <dd className="mt-1.5 text-white">{business.hours}</dd>
+                    <dd className="mt-1.5 text-text">{business.hours}</dd>
                   </div>
                 </dl>
 

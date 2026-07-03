@@ -14,7 +14,7 @@ const eventTypes = [
 ];
 
 const fieldClass =
-  "w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-white placeholder:text-muted focus:outline-none focus:border-primary transition-colors";
+  "w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/15 transition-colors";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -31,7 +31,7 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-2">
+        <label htmlFor="name" className="block text-sm font-medium text-text mb-2">
           Name
         </label>
         <input
@@ -44,7 +44,7 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">
+        <label htmlFor="phone" className="block text-sm font-medium text-text mb-2">
           Phone Number
         </label>
         <input
@@ -57,7 +57,7 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="eventType" className="block text-sm font-medium text-white/80 mb-2">
+        <label htmlFor="eventType" className="block text-sm font-medium text-text mb-2">
           Event Type
         </label>
         <select
@@ -67,14 +67,14 @@ export default function ContactForm() {
           className={fieldClass}
         >
           {eventTypes.map((type) => (
-            <option key={type} value={type} className="bg-bg text-white">
+            <option key={type} value={type} className="bg-bg-elev text-text">
               {type}
             </option>
           ))}
         </select>
       </div>
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">
+        <label htmlFor="message" className="block text-sm font-medium text-text mb-2">
           Tell us about your event
         </label>
         <textarea

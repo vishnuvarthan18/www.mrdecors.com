@@ -5,8 +5,8 @@ import Reveal from "./motion/Reveal";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-border bg-bg">
-      <div className="border-b border-border py-10 noise-bg">
+    <footer className="section-dark relative overflow-hidden border-t border-border">
+      <div className="border-b border-border py-10 glow-dark">
         <Marquee
           duration={26}
           className="text-4xl sm:text-6xl font-display font-semibold uppercase tracking-tight text-white/90"

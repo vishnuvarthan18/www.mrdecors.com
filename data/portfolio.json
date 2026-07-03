@@ -1,0 +1,98 @@
+[
+  {
+    "id": "seed-01",
+    "title": "Royal Red & Gold Stage Backdrop",
+    "category": "Wedding",
+    "image": "/images/wedding-1.jpg",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "seed-02",
+    "title": "Floral Arch Mandap",
+    "category": "Wedding",
+    "image": "/images/wedding-3.jpg",
+    "featured": true,
+    "order": 2
+  },
+  {
+    "id": "seed-03",
+    "title": "Traditional Puberty Function Set",
+    "category": "Puberty Function",
+    "image": "/images/floral-1.jpg",
+    "featured": false,
+    "order": 3
+  },
+  {
+    "id": "seed-04",
+    "title": "Pastel Theme Puberty Backdrop",
+    "category": "Puberty Function",
+    "image": "/images/table-decor.jpg",
+    "featured": true,
+    "order": 4
+  },
+  {
+    "id": "seed-05",
+    "title": "Superhero Theme Birthday Set",
+    "category": "Birthday",
+    "image": "/images/birthday.jpg",
+    "featured": false,
+    "order": 5
+  },
+  {
+    "id": "seed-06",
+    "title": "Balloon Arch Birthday Backdrop",
+    "category": "Birthday",
+    "image": "/images/arch.jpg",
+    "featured": false,
+    "order": 6
+  },
+  {
+    "id": "seed-07",
+    "title": "Housewarming Entrance Decor",
+    "category": "Housewarming",
+    "image": "/images/floral-2.jpg",
+    "featured": false,
+    "order": 7
+  },
+  {
+    "id": "seed-08",
+    "title": "Traditional Kalash Setup",
+    "category": "Housewarming",
+    "image": "/images/reception.jpg",
+    "featured": false,
+    "order": 8
+  },
+  {
+    "id": "seed-09",
+    "title": "Corporate Stage Branding",
+    "category": "Corporate",
+    "image": "/images/corporate.jpg",
+    "featured": true,
+    "order": 9
+  },
+  {
+    "id": "seed-10",
+    "title": "Product Launch Backdrop",
+    "category": "Corporate",
+    "image": "/images/lights.jpg",
+    "featured": false,
+    "order": 10
+  },
+  {
+    "id": "seed-11",
+    "title": "CNC Cut Acrylic Panels",
+    "category": "Custom Fabrication",
+    "image": "/images/fabrication.jpg",
+    "featured": false,
+    "order": 11
+  },
+  {
+    "id": "seed-12",
+    "title": "Laser Cut MDF Jaali Design",
+    "category": "Custom Fabrication",
+    "image": "/images/wedding-2.jpg",
+    "featured": false,
+    "order": 12
+  }
+]

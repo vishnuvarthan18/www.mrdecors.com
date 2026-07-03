@@ -12,17 +12,22 @@ export default function PageHeader({
   description?: string;
 }) {
   return (
-    <section className="relative overflow-hidden pt-40 pb-16 sm:pt-48 sm:pb-24 noise-bg">
+    <section className="relative overflow-hidden pt-36 pb-14 sm:pt-44 sm:pb-20 glow-light">
       <Container>
         <Reveal>
-          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-bg-elev px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            {eyebrow}
-          </p>
+          <div className="flex items-center justify-between border-b border-border pb-5 text-[11px] sm:text-xs font-medium uppercase tracking-[0.22em] text-muted">
+            <span className="flex items-center gap-2 text-primary">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              {eyebrow}
+            </span>
+            <span className="hidden sm:inline">MR Decors · Erode</span>
+          </div>
         </Reveal>
-        <h1 className="max-w-4xl font-display text-5xl sm:text-7xl font-semibold text-white leading-[0.95]">
+
+        <h1 className="mt-10 max-w-4xl font-display text-5xl sm:text-7xl lg:text-8xl font-semibold text-text leading-[0.92]">
           <AnimatedText text={title} />
         </h1>
+
         {description && (
           <Reveal delay={0.15}>
             <p className="mt-6 max-w-2xl text-lg text-muted leading-relaxed">

@@ -12,7 +12,7 @@ const services = [
   {
     no: "02",
     title: "Custom & Bespoke Design",
-    description: "One-of-a-kind installations built from scratch — nothing off the shelf.",
+    description: "One of a kind installations built from scratch, nothing off the shelf.",
   },
   {
     no: "03",
@@ -50,7 +50,7 @@ export default function ServiceList() {
               </h3>
               <p className="mt-2 max-w-xl text-sm text-muted">{service.description}</p>
             </div>
-            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-white transition-all duration-300 group-hover:bg-primary group-hover:border-primary group-hover:rotate-45">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-text transition-all duration-300 group-hover:bg-primary group-hover:border-primary group-hover:text-white group-hover:rotate-45">
               ↗
             </span>
           </Link>

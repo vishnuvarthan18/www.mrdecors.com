@@ -6,13 +6,11 @@ export default function SectionHeading({
   title,
   description,
   center = false,
-  light = false,
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
   center?: boolean;
-  light?: boolean;
 }) {
   return (
     <div className={`max-w-2xl ${center ? "mx-auto text-center" : ""}`}>
@@ -24,11 +22,7 @@ export default function SectionHeading({
           </p>
         </Reveal>
       )}
-      <h2
-        className={`text-4xl sm:text-5xl font-semibold ${
-          light ? "text-white" : "text-text"
-        }`}
-      >
+      <h2 className="text-4xl sm:text-5xl font-semibold text-text">
         <AnimatedText text={title} />
       </h2>
       {description && (

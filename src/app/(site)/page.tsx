@@ -8,6 +8,9 @@ import Accordion from "@/components/motion/Accordion";
 import Hero from "@/components/home/Hero";
 import ServiceList from "@/components/home/ServiceList";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
+import { getFeaturedItems } from "@/lib/portfolio";
+
+export const dynamic = "force-dynamic";
 
 const materials = [
   "MDF",
@@ -39,7 +42,7 @@ const process = [
 const faqs = [
   {
     q: "Do you only do weddings?",
-    a: "No — alongside weddings we handle puberty functions, birthdays, housewarmings, and corporate events, plus custom CNC and laser-cut fabrication for other decorators.",
+    a: "No. Alongside weddings we handle puberty functions, birthdays, housewarmings, and corporate events, plus custom CNC and laser cut fabrication for other decorators.",
   },
   {
     q: "What makes your decor custom?",
@@ -55,12 +58,13 @@ const faqs = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const featured = await getFeaturedItems(4);
   return (
     <>
       <Hero />
 
-      <section className="border-y border-border bg-bg-elev py-6">
+      <section className="section-dark border-y border-border py-6">
         <Marquee
           duration={28}
           className="text-xl sm:text-2xl font-display font-medium uppercase tracking-tight text-white/80"
@@ -73,7 +77,7 @@ export default function Home() {
           <SectionHeading
             eyebrow="What We Do"
             title="Decor & fabrication, under one roof"
-            description="From concept to install — we design it, cut it, build it, and set it up."
+            description="From concept to install, we design it, cut it, build it, and set it up."
           />
           <div className="mt-14">
             <ServiceList />
@@ -81,7 +85,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-24 sm:py-32 bg-bg-elev">
+      <section className="section-dark glow-dark py-24 sm:py-32">
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
@@ -91,14 +95,14 @@ export default function Home() {
             <Reveal delay={0.1}>
               <Link
                 href="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-text transition-colors hover:border-text"
               >
                 View Full Portfolio →
               </Link>
             </Reveal>
           </div>
           <div className="mt-16">
-            <FeaturedProjects />
+            <FeaturedProjects projects={featured} />
           </div>
         </Container>
       </section>
@@ -124,7 +128,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-24 sm:py-32 bg-bg-elev">
+      <section className="section-dark glow-dark py-24 sm:py-32">
         <Container>
           <SectionHeading
             eyebrow="Our Process"
@@ -134,11 +138,11 @@ export default function Home() {
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((item, i) => (
               <Reveal key={item.step} delay={i * 0.08}>
-                <div className="h-full rounded-2xl border border-border bg-bg p-8 transition-colors hover:border-primary">
+                <div className="h-full rounded-2xl border border-border bg-bg-elev p-8 transition-colors hover:border-primary">
                   <span className="font-display text-4xl font-semibold text-primary/40">
                     {item.step}
                   </span>
-                  <h3 className="mt-6 font-display text-xl font-medium text-white">
+                  <h3 className="mt-6 font-display text-xl font-medium text-text">
                     {item.title}
                   </h3>
                   <p className="mt-2 text-sm text-muted leading-relaxed">

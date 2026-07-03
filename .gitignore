@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# CMS uploaded images (keep folder, ignore contents)
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Cloudflare / OpenNext build + local state
+/.open-next/
+/.wrangler/

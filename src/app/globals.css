@@ -1,37 +1,51 @@
 @import "tailwindcss";
 
 :root {
+  /* Brand */
   --color-primary: #ec1923;
   --color-primary-dark: #b3121a;
   --color-primary-soft: #ff3b45;
-
-  /* Dark premium palette */
-  --color-bg: #0a0a0b;
-  --color-bg-elev: #121214;
-  --color-surface: #17171a;
-  --color-border: #26262b;
-  --color-text: #f5f4f2;
-  --color-muted: #9a979b;
   --color-white: #ffffff;
+
+  /* Light theme (default): 60% ivory, 30% ink, 10% red */
+  --color-bg: #fbf9f6;
+  --color-bg-elev: #ffffff;
+  --color-surface: #f3eee8;
+  --color-border: #e8e1d8;
+  --color-text: #1a1512;
+  --color-muted: #6e655d;
+}
+
+/* Dark sections invert the tokens so utilities follow automatically */
+.section-dark {
+  --color-bg: #131010;
+  --color-bg-elev: #1c1817;
+  --color-surface: #232019;
+  --color-border: #332d29;
+  --color-text: #f7f3ee;
+  --color-muted: #a79e96;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 @theme inline {
   --color-primary: var(--color-primary);
   --color-primary-dark: var(--color-primary-dark);
   --color-primary-soft: var(--color-primary-soft);
+  --color-white: var(--color-white);
   --color-bg: var(--color-bg);
   --color-bg-elev: var(--color-bg-elev);
   --color-surface: var(--color-surface);
   --color-border: var(--color-border);
   --color-text: var(--color-text);
   --color-muted: var(--color-muted);
-  --color-white: var(--color-white);
   --font-display: var(--font-space-grotesk);
   --font-body: var(--font-inter);
+  --font-script: var(--font-dancing-script);
 }
 
 html {
-  scrollbar-color: var(--color-border) var(--color-bg);
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -77,15 +91,15 @@ html.lenis body {
   animation: marquee var(--marquee-duration, 30s) linear infinite;
 }
 
-/* Subtle grain/gradient helpers */
-.text-gradient {
-  background: linear-gradient(180deg, #ffffff 0%, #b8b6b9 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Soft red ambient glow: subtle on light, richer on dark */
+.glow-light {
+  background-image:
+    radial-gradient(60% 50% at 15% 0%, rgba(236, 25, 35, 0.06), transparent 60%),
+    radial-gradient(50% 40% at 100% 10%, rgba(236, 25, 35, 0.05), transparent 55%);
 }
-
-.noise-bg {
-  background-image: radial-gradient(circle at 20% 20%, rgba(236, 25, 35, 0.12), transparent 45%),
-    radial-gradient(circle at 80% 0%, rgba(236, 25, 35, 0.08), transparent 40%);
+.section-dark .glow-light,
+.glow-dark {
+  background-image:
+    radial-gradient(60% 60% at 20% 0%, rgba(236, 25, 35, 0.16), transparent 55%),
+    radial-gradient(50% 50% at 90% 10%, rgba(236, 25, 35, 0.10), transparent 50%);
 }
