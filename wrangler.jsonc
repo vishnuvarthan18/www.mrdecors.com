@@ -15,7 +15,7 @@
     {
       "binding": "DB",
       "database_name": "mr-decors-db",
-      "database_id": "REPLACE_AFTER_WRANGLER_D1_CREATE",
+      "database_id": "8f25449e-4537-4fdd-b5f2-e4519970a2a2",
       "migrations_dir": "migrations"
     }
   ],
