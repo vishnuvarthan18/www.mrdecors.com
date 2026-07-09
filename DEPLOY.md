@@ -36,8 +36,30 @@ npm run deploy
 ```
 
 This builds with OpenNext and publishes the Worker. Your site goes live at
-`https://mr-decors-website.<your-subdomain>.workers.dev` (or attach a custom
-domain in the Cloudflare dashboard).
+`https://mr-decors-website.mrdecors.workers.dev` once deployed.
+
+## Custom domain (`mrdecors.com`)
+
+`wrangler.jsonc` is already configured for `mrdecors.com` and `www.mrdecors.com`.
+For those routes to work, the domain must use **Cloudflare DNS** (it currently
+points to Squarespace via Google Domains).
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com), click **Add a site**
+   and enter `mrdecors.com`. Choose the Free plan.
+2. Cloudflare will show two nameservers (e.g. `ada.ns.cloudflare.com`).
+3. At your domain registrar (Google Domains / Squarespace Domains), replace the
+   current nameservers with Cloudflare's.
+4. Wait for DNS to propagate (usually 15 minutes to a few hours).
+5. Redeploy:
+
+```bash
+npm run deploy
+```
+
+Cloudflare will create the DNS records for the Worker automatically. After that,
+`https://www.mrdecors.com` and `https://mrdecors.com` will serve this app.
+
+Until DNS is moved, use the workers.dev URL above.
 
 ## Local development
 
