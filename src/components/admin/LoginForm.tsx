@@ -1,10 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function LoginForm() {
-  const router = useRouter();
+export default function LoginForm({ onSuccess }: { onSuccess: (token: string) => void }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,8 +18,12 @@ export default function LoginForm() {
     });
     setLoading(false);
     if (res.ok) {
-      router.replace("/admin");
-      router.refresh();
+      const data = (await res.json()) as { token?: string };
+      if (data.token) {
+        onSuccess(data.token);
+      } else {
+        setError("Login failed");
+      }
     } else {
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       setError(data.error || "Login failed");

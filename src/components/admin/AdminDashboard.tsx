@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Logo from "@/components/Logo";
 
 type Item = {
@@ -22,14 +21,21 @@ type FormState = {
   featured: boolean;
 };
 
+function authHeaders(token: string, extra?: HeadersInit): HeadersInit {
+  return { Authorization: `Bearer ${token}`, ...extra };
+}
+
 export default function AdminDashboard({
+  token,
   initialItems,
   categories,
+  onLogout,
 }: {
+  token: string;
   initialItems: Item[];
   categories: string[];
+  onLogout: () => void;
 }) {
-  const router = useRouter();
   const [items, setItems] = useState<Item[]>(initialItems);
   const [form, setForm] = useState<FormState | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -69,7 +75,11 @@ export default function AdminDashboard({
     try {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: authHeaders(token),
+        body: fd,
+      });
       if (res.ok) {
         const { path } = (await res.json()) as { path: string };
         setPreviewUrl((prev) => {
@@ -101,7 +111,7 @@ export default function AdminDashboard({
       isEdit ? `/api/admin/portfolio/${form.id}` : "/api/admin/portfolio",
       {
         method: isEdit ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(token, { "Content-Type": "application/json" }),
         body: JSON.stringify({
           title: form.title,
           category: form.category,
@@ -117,7 +127,6 @@ export default function AdminDashboard({
         isEdit ? prev.map((i) => (i.id === item.id ? item : i)) : [...prev, item],
       );
       setForm(null);
-      router.refresh();
     } else {
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       setError(data.error || "Save failed");
@@ -126,17 +135,17 @@ export default function AdminDashboard({
 
   async function handleDelete(id: string) {
     if (!confirm("Delete this portfolio item? This cannot be undone.")) return;
-    const res = await fetch(`/api/admin/portfolio/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/admin/portfolio/${id}`, {
+      method: "DELETE",
+      headers: authHeaders(token),
+    });
     if (res.ok) {
       setItems((prev) => prev.filter((i) => i.id !== id));
-      router.refresh();
     }
   }
 
-  async function handleLogout() {
-    await fetch("/api/admin/logout", { method: "POST" });
-    router.replace("/admin/login");
-    router.refresh();
+  function handleLogout() {
+    onLogout();
   }
 
   return (

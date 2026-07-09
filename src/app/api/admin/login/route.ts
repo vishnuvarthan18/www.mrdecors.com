@@ -1,7 +1,22 @@
 import { NextResponse } from "next/server";
 import { AUTH_COOKIE, checkPassword, makeToken } from "@/lib/auth";
+import {
+  checkRateLimit,
+  clearAttempts,
+  getClientIp,
+  recordFailedAttempt,
+} from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const rate = checkRateLimit(ip);
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { error: `Too many attempts. Try again in ${rate.retryAfterSec} seconds.` },
+      { status: 429 },
+    );
+  }
+
   let password = "";
   try {
     const body = (await request.json()) as { password?: unknown };
@@ -11,16 +26,23 @@ export async function POST(request: Request) {
   }
 
   if (!(await checkPassword(password))) {
+    recordFailedAttempt(ip);
     return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
   }
 
-  const res = NextResponse.json({ ok: true });
-  res.cookies.set(AUTH_COOKIE, await makeToken(), {
+  clearAttempts(ip);
+
+  const token = await makeToken();
+  const res = NextResponse.json({ ok: true, token });
+
+  // Clear any legacy persistent cookie from previous auth model
+  res.cookies.set(AUTH_COOKIE, "", {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: 0,
   });
+
   return res;
 }

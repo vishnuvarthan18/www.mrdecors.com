@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export const AUTH_COOKIE = "mrd_admin";
+export const TOKEN_MAX_AGE_MS = 8 * 60 * 60 * 1000; // 8 hours
 
 /**
  * Read a secret from the Cloudflare env (production/preview via
@@ -37,7 +38,7 @@ function safeEqual(a: string, b: string): boolean {
 
 export async function makeToken(): Promise<string> {
   const secret = await getSessionSecret();
-  const payload = "authed";
+  const payload = String(Date.now());
   return `${payload}.${sign(payload, secret)}`;
 }
 
@@ -45,6 +46,11 @@ export async function verifyToken(token?: string | null): Promise<boolean> {
   if (!token) return false;
   const [payload, sig] = token.split(".");
   if (!payload || !sig) return false;
+
+  const issuedAt = Number(payload);
+  if (!Number.isFinite(issuedAt)) return false;
+  if (Date.now() - issuedAt > TOKEN_MAX_AGE_MS) return false;
+
   const secret = await getSessionSecret();
   return safeEqual(sig, sign(payload, secret));
 }
@@ -55,7 +61,26 @@ export async function checkPassword(password: string): Promise<boolean> {
   return safeEqual(password, expected);
 }
 
+function extractBearerToken(request: Request): string | null {
+  const header = request.headers.get("authorization");
+  if (!header?.startsWith("Bearer ")) return null;
+  const token = header.slice(7).trim();
+  return token || null;
+}
+
+export async function isAuthedFromToken(token?: string | null): Promise<boolean> {
+  return verifyToken(token);
+}
+
 export async function isAuthed(): Promise<boolean> {
+  const store = await cookies();
+  return verifyToken(store.get(AUTH_COOKIE)?.value);
+}
+
+export async function isAuthedFromRequest(request: Request): Promise<boolean> {
+  const bearer = extractBearerToken(request);
+  if (bearer) return verifyToken(bearer);
+
   const store = await cookies();
   return verifyToken(store.get(AUTH_COOKIE)?.value);
 }

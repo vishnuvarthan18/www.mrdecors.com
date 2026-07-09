@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { isAuthed } from "@/lib/auth";
+import { isAuthedFromRequest } from "@/lib/auth";
 import {
   deletePortfolioItem,
   updatePortfolioItem,
@@ -10,7 +10,7 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!(await isAuthed())) {
+  if (!(await isAuthedFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -43,10 +43,10 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!(await isAuthed())) {
+  if (!(await isAuthedFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

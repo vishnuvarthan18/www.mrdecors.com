@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { isAuthed } from "@/lib/auth";
+import { isAuthedFromRequest } from "@/lib/auth";
 import {
   createPortfolioItem,
   getPortfolioItems,
   PORTFOLIO_CATEGORIES,
 } from "@/lib/portfolio";
 
-export async function GET() {
-  if (!(await isAuthed())) {
+export async function GET(request: Request) {
+  if (!(await isAuthedFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const items = await getPortfolioItems();
@@ -15,7 +15,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!(await isAuthed())) {
+  if (!(await isAuthedFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

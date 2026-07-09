@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { isAuthed } from "@/lib/auth";
+import { isAuthedFromRequest } from "@/lib/auth";
 import { putUpload, StorageUnavailableError } from "@/lib/storage";
 
 const ALLOWED = new Map<string, string>([
@@ -29,7 +29,7 @@ function contentTypeForExtension(ext: string): string {
 }
 
 export async function POST(request: Request) {
-  if (!(await isAuthed())) {
+  if (!(await isAuthedFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
