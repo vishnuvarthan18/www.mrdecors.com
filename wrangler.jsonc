@@ -25,5 +25,15 @@
       "bucket_name": "mr-decors-uploads"
     }
   ],
+  "routes": [
+    {
+      "pattern": "mrdecors.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.mrdecors.com",
+      "custom_domain": true
+    }
+  ],
   "vars": {}
 }

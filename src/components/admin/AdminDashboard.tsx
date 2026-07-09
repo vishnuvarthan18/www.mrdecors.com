@@ -33,17 +33,20 @@ export default function AdminDashboard({
   const [items, setItems] = useState<Item[]>(initialItems);
   const [form, setForm] = useState<FormState | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   function openNew() {
     setError("");
+    setPreviewUrl(null);
     setForm({ id: null, title: "", category: categories[0], image: "", featured: false });
   }
 
   function openEdit(item: Item) {
     setError("");
+    setPreviewUrl(null);
     setForm({
       id: item.id,
       title: item.title,
@@ -56,16 +59,32 @@ export default function AdminDashboard({
   async function handleUpload(file: File) {
     setUploading(true);
     setError("");
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-    setUploading(false);
-    if (res.ok) {
-      const { path } = (await res.json()) as { path: string };
-      setForm((f) => (f ? { ...f, image: path } : f));
-    } else {
-      const data = (await res.json().catch(() => ({}))) as { error?: string };
-      setError(data.error || "Upload failed");
+
+    const localPreview = URL.createObjectURL(file);
+    setPreviewUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return localPreview;
+    });
+
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      if (res.ok) {
+        const { path } = (await res.json()) as { path: string };
+        setPreviewUrl((prev) => {
+          if (prev) URL.revokeObjectURL(prev);
+          return null;
+        });
+        setForm((f) => (f ? { ...f, image: path } : f));
+      } else {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        setError(data.error || "Upload failed");
+      }
+    } catch {
+      setError("Upload failed. Check your connection and try again.");
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -259,9 +278,15 @@ export default function AdminDashboard({
                   }}
                   className="flex cursor-pointer items-center gap-4 rounded-xl border border-dashed border-border bg-bg p-4 hover:border-primary"
                 >
-                  {form.image ? (
+                  {(previewUrl || form.image) ? (
                     <div className="relative h-16 w-20 overflow-hidden rounded-lg">
-                      <Image src={form.image} alt="preview" fill className="object-cover" />
+                      <Image
+                        src={previewUrl || form.image}
+                        alt="preview"
+                        fill
+                        unoptimized
+                        className="object-cover"
+                      />
                     </div>
                   ) : (
                     <div className="flex h-16 w-20 items-center justify-center rounded-lg bg-surface text-muted">
